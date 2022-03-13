@@ -73,6 +73,7 @@ public class Freight_frenzy_teleop extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()) {
+            cutie.setPosition(0.43);
             //control miscare
             double x = gamepad1.left_stick_x;
             double y = -gamepad1.left_stick_y;
@@ -112,8 +113,7 @@ public class Freight_frenzy_teleop extends LinearOpMode {
 
 
             if (gamepad2.dpad_up) {
-                control.setPosition(0.6);
-                cutie.setPosition(0.1);
+                control.setPosition(0.3);
                 retragere.setPosition(-0.4);
                 sleep(500);
                 extindere.setTargetPosition(0);
@@ -124,32 +124,22 @@ public class Freight_frenzy_teleop extends LinearOpMode {
                 extindere.setTargetPosition(3300);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 extindere.setPower(0.8);
-                retragere.setPosition(0.6);
-                control.setPosition(0.6);
-                cutie.setPosition(0);
-                sleep(1200);
-                cutie.setPosition(0.4);
+                retragere.setPosition(0.45);
+                control.setPosition(0.3);
+                sleep(2000);
+                control.setPosition(0.51);
+                telemetry.addData("ajuns","jos");
+                telemetry.update();
+
             }
 
-            if(gamepad2.x){
+            if(gamepad2.y){
                 control.setPosition(-1);
-                cutie.setPosition();
-                cutie.setPosition(-1);
                 //spate full
             }
 
-//            if(gamepad2.y) {
-//                control.setPosition(0);
-//                cutie.setPosition(0.4);
-//                //jos
-//            }
-//            if(gamepad2.x){
-//                control.setPosition(0.6);
-//                cutie.setPosition(0);
-//            }
-
             if(gamepad2.left_bumper)
-                carusel.setPower(0.85);
+                carusel.setPower(-0.85);
             else
                 carusel.setPower(0);
         }
