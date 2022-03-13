@@ -1,0 +1,3 @@
+0 Stanga
+1 Mijloc
+2 Dreapta
