@@ -28,7 +28,8 @@ public class Freight_frenzy_teleop extends LinearOpMode {
     //
     DcMotor stangafata, dreaptafata, stangaspate, dreaptaspate;
 
-    Servo cutie, control, retragere;
+    Servo cutie, control, retragere1, retragere2;
+
 
     DcMotor intake1, intake2, extindere, carusel;
     DistanceSensor distanta;
@@ -39,7 +40,8 @@ public class Freight_frenzy_teleop extends LinearOpMode {
         hardware part = new hardware(hardwareMap);
         cutie = part.getCutie();
         control = part.getControl();
-        retragere = part.getRetragere();
+        retragere1 = part.getRetragere1();
+        retragere2=part.getRetragere2();
 
         //sasiu
         stangafata = part.getMotorstangafata();
@@ -51,7 +53,7 @@ public class Freight_frenzy_teleop extends LinearOpMode {
         intake1 = part.getIntake1();
         intake2 = part.getIntake2();
         extindere = part.getExtindere();
-        carusel=part.getCarusel();
+        carusel = part.getCarusel();
 
         dreaptafata.setDirection(DcMotorSimple.Direction.FORWARD);
         dreaptaspate.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -71,20 +73,15 @@ public class Freight_frenzy_teleop extends LinearOpMode {
 
         extindere.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        retragere1.setDirection(Servo.Direction.REVERSE);
         waitForStart();
         while (opModeIsActive()) {
             cutie.setPosition(0.43);
-            //control miscare
+            //gamepad1 - miscare
             double x = gamepad1.left_stick_x;
             double y = -gamepad1.left_stick_y;
             double turn = gamepad1.right_stick_x;
-        /*
-            //sus
-            control.setPosition(0);
-            cutie.setPosition(0.4);
-            //slowmode - default-half speed  pressed-full speed
 
-        */
             if (!gamepad1.left_bumper) {
                 x /= 2;
                 y /= 2;
@@ -95,55 +92,77 @@ public class Freight_frenzy_teleop extends LinearOpMode {
             mecanum(x, y, turn);
 
 
-            //gamepad 2 - control brat si intake + carusel
+            //gamepad 2 - control brat + intake + carusel
+            if (gamepad2.left_bumper)
+                carusel.setPower(-0.80);
+            else
+                carusel.setPower(0);
 
             if (gamepad2.right_trigger > 0) {
                 intake1.setPower(gamepad2.right_trigger);
                 intake2.setPower(-gamepad2.right_trigger);
-
             } else if (gamepad2.left_trigger > 0) {
                 intake1.setPower(-gamepad2.left_trigger);
                 intake2.setPower(gamepad2.left_trigger);
-
             } else {
-
                 intake1.setPower(0);
                 intake2.setPower(0);
             }
 
 
-            if (gamepad2.dpad_up) {
-                control.setPosition(0.3);
-                retragere.setPosition(-0.4);
+            //control brat
+            if (gamepad2.b) {
+                retragere1.setPosition(0.25);
+                retragere2.setPosition(0.25);
+                extindere.setTargetPosition(-500);
+                extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                extindere.setPower(0.6);
+                control.setPosition(0.2);
+
+            }
+            if (gamepad2.a) {
+                retragere1.setPosition(1);
+                retragere2.setPosition(1);
                 sleep(500);
                 extindere.setTargetPosition(0);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                extindere.setPower(0.8);
-
-            } else if (gamepad2.dpad_down) {
-                extindere.setTargetPosition(3300);
-                extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                extindere.setPower(0.8);
-                retragere.setPosition(0.45);
-                control.setPosition(0.3);
-                sleep(2000);
+                extindere.setPower(0.6);
                 control.setPosition(0.51);
-                telemetry.addData("ajuns","jos");
-                telemetry.update();
-
             }
 
-            if(gamepad2.y){
+            if (gamepad2.dpad_down)
+                coborare();
+            if (gamepad2.dpad_up)
+                urcare();
+
+            if (gamepad2.y) {
                 control.setPosition(-1);
                 //spate full
             }
 
-            if(gamepad2.left_bumper)
-                carusel.setPower(-0.85);
-            else
-                carusel.setPower(0);
+            if (gamepad2.back)
+                jos_manual();
         }
     }
+
+    public void urcare(){
+        extindere.setTargetPosition(-3300);
+        extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        extindere.setPower(0.8);
+    }
+    public void coborare(){
+        extindere.setTargetPosition(-500);
+        extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        extindere.setPower(0.8);
+        control.setPosition(0.3);
+    }
+
+    public void jos_manual(){
+        extindere.setTargetPosition(3300);
+        extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        extindere.setPower(0.8);
+    }
+
     /**
      * Control a mecanum drive base with three double inputs
      *
@@ -174,3 +193,4 @@ public class Freight_frenzy_teleop extends LinearOpMode {
 
     }
 }
+

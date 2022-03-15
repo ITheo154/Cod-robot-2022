@@ -28,7 +28,8 @@ public class hardware {
 
     //servos
     DcMotor getCarusel(){return hardwareMap.dcMotor.get("carusel");}
-    Servo getRetragere(){return hardwareMap.servo.get("retragere");}
+    Servo getRetragere1(){return hardwareMap.servo.get("retragere1");}
+    Servo getRetragere2(){return hardwareMap.servo.get("retragere2");}
     Servo getControl(){return hardwareMap.servo.get("control");}
     Servo getCutie(){return hardwareMap.servo.get("cutie");}
 
