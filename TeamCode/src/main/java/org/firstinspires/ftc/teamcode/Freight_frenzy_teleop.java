@@ -114,19 +114,23 @@ public class Freight_frenzy_teleop extends LinearOpMode {
             if (gamepad2.b) {
                 retragere1.setPosition(0.25);
                 retragere2.setPosition(0.25);
+                //intake sus
                 extindere.setTargetPosition(-500);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 extindere.setPower(0.6);
+                //brat cutie sus
                 control.setPosition(0.2);
-
             }
+
             if (gamepad2.a) {
                 retragere1.setPosition(1);
                 retragere2.setPosition(1);
+                //intake jos
                 sleep(500);
                 extindere.setTargetPosition(0);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 extindere.setPower(0.6);
+                //brat cutie jos
                 control.setPosition(0.51);
             }
 
