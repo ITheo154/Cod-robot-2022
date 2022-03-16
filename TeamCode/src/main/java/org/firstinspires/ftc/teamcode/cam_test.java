@@ -101,7 +101,7 @@ public class cam_test extends LinearOpMode {
     @Override
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
-        // first.
+        // fiConceptWebcamrst.
         initVuforia();
         initTfod();
 
