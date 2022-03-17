@@ -91,6 +91,13 @@ public class Freight_frenzy_teleop extends LinearOpMode {
             }
             mecanum(x, y, turn);
 
+            //
+            if (gamepad2.a){
+
+            }
+            if (gamepad2.b){
+
+            }
 
             //gamepad 2 - control brat + intake + carusel
             if (gamepad2.left_bumper)
@@ -108,34 +115,33 @@ public class Freight_frenzy_teleop extends LinearOpMode {
                 intake1.setPower(0);
                 intake2.setPower(0);
             }
-
-
+            telemetry.addData("retragere1",retragere1.getPosition());
+            telemetry.addData("retragere2",retragere2.getPosition());
+            telemetry.update();
             //control brat
-            if (gamepad2.b) {
-                retragere1.setPosition(0.25);
-                retragere2.setPosition(0.25);
+            if (gamepad2.dpad_left) {
+                retragere1.setPosition(0.8);
+                retragere2.setPosition(0.8);
                 //intake sus
-                extindere.setTargetPosition(-500);
+                extindere.setTargetPosition(2500);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 extindere.setPower(0.6);
                 //brat cutie sus
                 control.setPosition(0.2);
             }
 
-            if (gamepad2.a) {
-                retragere1.setPosition(1);
-                retragere2.setPosition(1);
+            if (gamepad2.dpad_down) {
+                retragere1.setPosition(0.44);
+                retragere2.setPosition(0.44);
                 //intake jos
                 sleep(500);
-                extindere.setTargetPosition(0);
+                extindere.setTargetPosition(3250);
                 extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                extindere.setPower(0.6);
+                extindere.setPower(0.8);
                 //brat cutie jos
-                control.setPosition(0.51);
+                control.setPosition(0.54);
             }
 
-            if (gamepad2.dpad_down)
-                coborare();
             if (gamepad2.dpad_up)
                 urcare();
 
@@ -146,16 +152,17 @@ public class Freight_frenzy_teleop extends LinearOpMode {
 
             if (gamepad2.back)
                 jos_manual();
+
         }
     }
 
     public void urcare(){
-        extindere.setTargetPosition(-3300);
+        extindere.setTargetPosition(0);
         extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        extindere.setPower(0.8);
+        extindere.setPower(0.6);
     }
     public void coborare(){
-        extindere.setTargetPosition(-500);
+        extindere.setTargetPosition(3300);
         extindere.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         extindere.setPower(0.8);
         control.setPosition(0.3);
